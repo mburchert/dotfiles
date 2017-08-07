@@ -87,7 +87,7 @@ alias grep='grep --color=auto'
 alias tmux='tmux -2'
 alias vim='nvim'
 
-alias vimrc='vim ~/.vimrc'
+alias vimrc='vim ~/.config/nvim/init.vim'
 alias zshrc='vim ~/.zshrc'
 alias sshconfig='vim ~/.ssh/config'
 alias tmuxconfig='vim ~/.tmux.conf'
