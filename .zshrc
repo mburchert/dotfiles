@@ -79,6 +79,24 @@ antigen apply
 
 # }}}
 # ------------------------------------------------------------------------------------
+# Some handy aliases {{{
+# ------------------------------------------------------------------------------------
+
+alias ls='ls -GFls '
+alias grep='grep --color=auto'
+alias tmux='tmux -2'
+alias vim='nvim'
+
+alias vimrc='vim ~/.vimrc'
+alias zshrc='vim ~/.zshrc'
+alias sshconfig='vim ~/.ssh/config'
+alias tmuxconfig='vim ~/.tmux.conf'
+
+alias -g L=' | less'
+alias -g G=' | grep -i --color=auto '
+# }}}
+
+# ------------------------------------------------------------------------------------
 # If there is a .zshrc_local source it {{{
 # ------------------------------------------------------------------------------------
 

@@ -4,6 +4,7 @@
 # Run with: brew bundle --file=$HOME/.Brewfile
 
 brew 'antigen'
+brew 'neovim'
 
 #tap 'caskroom/cask'
 #brew 'brew-cask'
