@@ -74,7 +74,10 @@ zstyle -e ':completion:*:hosts' hosts 'reply=(
 # ------------------------------------------------------------------------------------
 
 source /usr/local/share/antigen/antigen.zsh
+
 antigen bundle nojhan/liquidprompt
+antigen bundle zsh-users/zsh-completions
+
 antigen apply
 
 # }}}
