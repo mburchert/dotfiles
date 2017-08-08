@@ -2,6 +2,9 @@
 
 system_type=$(uname -s)
 
+# ------------------------------------------------------------------------------------
+# Install Homebrew and brews from ~/.Brewfile {{{
+# ------------------------------------------------------------------------------------
 if [ "$system_type" = "Darwin" ]; then
 
   # install homebrew if it's missing
@@ -16,3 +19,16 @@ if [ "$system_type" = "Darwin" ]; then
   fi
 
 fi
+# }}}
+# ------------------------------------------------------------------------------------
+# Configure iterm2 to use the dotfiles we provided {{{
+# ------------------------------------------------------------------------------------
+
+# Specify the preferences directory
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.yadm/iterm2_profile"
+# Tell iTerm2 to use the custom preferences in the directory
+defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
+# }}}
+# ------------------------------------------------------------------------------------
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
