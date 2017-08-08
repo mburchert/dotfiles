@@ -56,6 +56,7 @@ set splitbelow    " Always create new splits below the current
 set splitright    " Always create new vsplits right of the current 
 set clipboard=unnamed
 set backspace=indent,eol,start 
+set nowrap        " Don't wrap long lines 
 
 set hlsearch ignorecase incsearch 
 set gdefault      " For search & replace automatically use global mode
