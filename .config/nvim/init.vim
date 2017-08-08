@@ -28,7 +28,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " -------------------------------------------------------------------
 NeoBundle 'mhartington/oceanic-next'  " oceanic next color scheme
 NeoBundle 'jlanzarotta/bufexplorer'   " buffexplorer for working with multiple buffers
-NeoBundle 'vim-airline/vim-airline'   " nice statusline
+"NeoBundle 'vim-airline/vim-airline'   " nice statusline
 NeoBundle 'scrooloose/nerdtree'       " filebrowser pane
 NeoBundle 'Xuyuanp/nerdtree-git-plugin' 
 NeoBundle 'kien/ctrlp.vim'            " quick search
@@ -61,12 +61,13 @@ set nowrap        " Don't wrap long lines
 set hlsearch ignorecase incsearch 
 set gdefault      " For search & replace automatically use global mode
 set smartcase     " If a capital letter is in the search term make search case sensitive
+set enc=utf-8
 
 " -------------------------------------------------------------------
 " Plugin - vim-airline setup {{{
 " -------------------------------------------------------------------
-let g:airline_theme='oceanicnext'
-let g:airline_powerline_fonts=1
+"let g:airline_theme='oceanicnext'
+"let g:airline_powerline_fonts=1
 " }}}
 " -------------------------------------------------------------------
 " Plugin - oceanic-next color scheme setup {{{
@@ -176,6 +177,32 @@ syntax enable
 colorscheme OceanicNext
 
 " }}}
+
+" Checking very simple mode {{{
+"t | it is │ (s
+" set background=dark
+hi vertsplit ctermfg=238 ctermbg=235
+hi LineNr ctermfg=237
+hi StatusLine ctermfg=235 ctermbg=245
+hi StatusLineNC ctermfg=235 ctermbg=237
+hi Search ctermbg=58 ctermfg=15
+hi Default ctermfg=1
+hi clear SignColumn
+hi SignColumn ctermbg=235
+hi GitGutterAdd ctermbg=235 ctermfg=245
+hi GitGutterChange ctermbg=235 ctermfg=245
+hi GitGutterDelete ctermbg=235 ctermfg=245
+hi GitGutterChangeDelete ctermbg=235 ctermfg=245
+hi EndOfBuffer ctermfg=237 ctermbg=235
+
+set statusline=%=%P\ %f\ %m
+"set fillchars=vert:\│
+"set background=dark
+set fillchars=vert:\ ,stl:\ ,stlnc:\ 
+set laststatus=2
+set noshowmode
+" }}} 
+
 " -------------------------------------------------------------------
 " vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
 

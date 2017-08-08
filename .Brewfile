@@ -5,6 +5,7 @@
 
 brew 'antigen'
 brew 'neovim'
+brew 'reattach-to-user-namespace'
 
 #tap 'caskroom/cask'
 #brew 'brew-cask'
