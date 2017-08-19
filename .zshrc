@@ -1,3 +1,4 @@
+ZSH_TMUX_AUTOSTART=true
 # ------------------------------------------------------------------------------------
 # Setup completion engine {{{
 # ------------------------------------------------------------------------------------
@@ -156,6 +157,41 @@ zle -N zle-keymap-select
 export KEYTIMEOUT=1
 
 # }}}
+# ------------------------------------------------------------------------------------
+# Configure znt-navigation-tools for History and CD
+# ------------------------------------------------------------------------------------
+
+# Enable the history widget and bind ctrl+r to show it
+autoload znt-history-widget
+zle -N znt-history-widget
+bindkey "^R" znt-history-widget
+
+# Enable the cd widget and bind ctrl+b to show it 
+zle -N znt-cd-widget
+bindkey "^B" znt-cd-widget
+
+# Enable the kill widget and bind ctrl+y to show it 
+# @TODO See if this is actually used
+zle -N znt-kill-widget
+bindkey "^Y" znt-kill-widget
+
+# }}}
+# ------------------------------------------------------------------------------------
+# Start shell in tmux session if configured
+# ------------------------------------------------------------------------------------
+
+if [ -n $ZSH_TMUX_AUTOSTART -a "$ZSH_TMUX_AUTOSTART" = "true" ]; then
+	if command -v tmux > /dev/null; then
+		if [[ ! $TERM =~ screen ]] && [ -z $TMUX ]; then
+			if tmux has-session -t master; then
+				exec tmux new-session -A -t master \; new-window
+			else
+				exec tmux new-session -A -s master -n main
+			fi
+		fi
+	fi
+fi
+### }}}
 # ------------------------------------------------------------------------------------
 # If there is a .zshrc_local source it {{{
 # ------------------------------------------------------------------------------------
