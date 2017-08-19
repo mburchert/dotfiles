@@ -70,6 +70,13 @@ zstyle -e ':completion:*:hosts' hosts 'reply=(
 
 # }}} 
 # ------------------------------------------------------------------------------------
+# Setup colors {{{
+# ------------------------------------------------------------------------------------
+
+autoload -U colors && colors 
+
+# }}}
+# ------------------------------------------------------------------------------------
 # Install antigen addons {{{
 # ------------------------------------------------------------------------------------
 
@@ -127,6 +134,26 @@ setopt hist_ignore_space
 setopt hist_verify
 setopt inc_append_history
 setopt share_history # share command history data
+
+# }}}
+# ------------------------------------------------------------------------------------
+# Configure vi mode and show status in the prompt {{{
+# ------------------------------------------------------------------------------------
+
+bindkey -v 
+#
+#function zle-line-init zle-keymap-select {
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg[blue]%} [% NORMAL ]%  %{$reset_color%}"
+    VIM_PROMPT2="%{$fg[red]%} [% INSERT ]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/$VIM_PROMPT2}"
+    RPS2=$RPS1
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
 
 # }}}
 # ------------------------------------------------------------------------------------
