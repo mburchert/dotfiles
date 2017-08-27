@@ -11,3 +11,4 @@ brew 'reattach-to-user-namespace'
 #brew 'brew-cask'
 
 cask 'iterm2'
+cask 'commander-one'
