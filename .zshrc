@@ -158,7 +158,7 @@ export KEYTIMEOUT=1
 
 # }}}
 # ------------------------------------------------------------------------------------
-# Configure znt-navigation-tools for History and CD
+# Configure znt-navigation-tools for History and CD {{{
 # ------------------------------------------------------------------------------------
 
 # Enable the history widget and bind ctrl+r to show it
@@ -177,7 +177,7 @@ bindkey "^Y" znt-kill-widget
 
 # }}}
 # ------------------------------------------------------------------------------------
-# Start shell in tmux session if configured
+# Start shell in tmux session if configured {{{
 # ------------------------------------------------------------------------------------
 
 if [ -n $ZSH_TMUX_AUTOSTART -a "$ZSH_TMUX_AUTOSTART" = "true" ]; then
@@ -191,6 +191,14 @@ if [ -n $ZSH_TMUX_AUTOSTART -a "$ZSH_TMUX_AUTOSTART" = "true" ]; then
 		fi
 	fi
 fi
+### }}}
+# ------------------------------------------------------------------------------------
+# Set the path to the users bin if it exists {{{
+# ------------------------------------------------------------------------------------
+if [ -e $HOME/bin ]; then
+	PATH="$HOME/bin:$PATH"
+fi
+
 ### }}}
 # ------------------------------------------------------------------------------------
 # If there is a .zshrc_local source it {{{
