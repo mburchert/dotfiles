@@ -6,6 +6,7 @@
 brew 'antigen'
 brew 'neovim'
 brew 'reattach-to-user-namespace'
+brew 'tmux'
 
 #tap 'caskroom/cask'
 #brew 'brew-cask'
