@@ -63,6 +63,9 @@ set gdefault      " For search & replace automatically use global mode
 set smartcase     " If a capital letter is in the search term make search case sensitive
 set enc=utf-8
 
+set tabstop=3 softtabstop=3 shiftwidth=3 noexpandtab
+
+
 " -------------------------------------------------------------------
 " Plugin - vim-airline setup {{{
 " -------------------------------------------------------------------
