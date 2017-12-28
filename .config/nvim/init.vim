@@ -35,6 +35,8 @@ NeoBundle 'kien/ctrlp.vim'            " quick search
 
 NeoBundle 'pearofducks/ansible-vim'   " Ansible Syntax
 NeoBundle 'f-breidenstein/icinga-vim' " Icinga2 Config File Syntax
+NeoBundle 'hashivim/vim-terraform'    " Terraform Modules incl. Syntax Highlight
+NeoBundle 'christoomey/vim-tmux-navigator' " Vim / Tmux Navigation 
 " -------------------------------------------------------------------
 " NeoBundle Script Exectuion {{{ 
 " -------------------------------------------------------------------
@@ -96,9 +98,18 @@ colorscheme OceanicNext
 " -------------------------------------------------------------------
 " Plugin - NERDtree {{{
 " -------------------------------------------------------------------
-autocmd vimenter * NERDTree
-autocmd vimenter * wincmd w
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+if !(has("gui_vimr"))
+	autocmd vimenter * NERDTree
+	autocmd vimenter * wincmd w
+	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+endif
+" }}}
+" -------------------------------------------------------------------
+" Plugin - vim-terraform {{{
+" -------------------------------------------------------------------
+let g:terraform_align=1
+let g:terraform_fold_sections=1
+au BufRead,BufNewFile *.tf setlocal foldlevel=0
 
 " }}}
 " -------------------------------------------------------------------
@@ -116,6 +127,11 @@ let g:ctrlp_show_hidden=1
 " automatically reload .vimrc after it has been edited
 autocmd BufWritePost .vimrc source ~/.vimrc
 autocmd BufWritePost init.vim source ~/.config/nvim/init.vim
+
+augroup vagrant
+  au!
+  au BufRead,BufNewFile Vagrantfile set filetype=ruby
+augroup END
 
 " }}}
 " -------------------------------------------------------------------
@@ -198,7 +214,7 @@ hi GitGutterDelete ctermbg=235 ctermfg=245
 hi GitGutterChangeDelete ctermbg=235 ctermfg=245
 hi EndOfBuffer ctermfg=237 ctermbg=235
 
-set statusline=%=%P\ %f\ %m
+set statusline=%=%P\ %f\:%l\:%c\ %m
 "set fillchars=vert:\│
 "set background=dark
 set fillchars=vert:\ ,stl:\ ,stlnc:\ 
