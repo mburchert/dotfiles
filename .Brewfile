@@ -7,6 +7,10 @@ brew 'antigen'
 brew 'neovim'
 brew 'reattach-to-user-namespace'
 brew 'tmux'
+brew 'fzy'
+brew 'the_silver_searcher'
+
+# brew 'ansible-lint' 
 
 #tap 'caskroom/cask'
 #brew 'brew-cask'
