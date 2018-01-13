@@ -1,149 +1,171 @@
+scriptencoding utf-8
 " -------------------------------------------------------------------
-" NeoBundle Script Initialisation {{{
+" enable true color support {{{
 " -------------------------------------------------------------------
-if has('vim_starting')  
-  set runtimepath+=~/.config/nvim/bundle/neobundle.vim/
-  set runtimepath+=~/.config/nvim/
-endif
-
-let neobundle_readme=expand('~/.config/nvim/bundle/neobundle.vim/README.md')
-
-if !filereadable(neobundle_readme)  
-  echo "Installing NeoBundle..."
-  echo ""
-  silent !mkdir -p ~/.config/nvim/bundle
-  silent !git clone https://github.com/Shougo/neobundle.vim ~/.config/nvim/bundle/neobundle.vim/
-  let g:not_finsh_neobundle = "yes"
-endif
-
-call neobundle#begin(expand('$HOME/.config/nvim/bundle'))  
-
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" My Bundles here:
-" Refer to |:NeoBundle-examples|.
+  if has('nvim') || has('termguicolors')
+    set termguicolors
+  endif
 " }}}
 " -------------------------------------------------------------------
-NeoBundle 'mhartington/oceanic-next'  " oceanic next color scheme
-NeoBundle 'jlanzarotta/bufexplorer'   " buffexplorer for working with multiple buffers
-"NeoBundle 'vim-airline/vim-airline'   " nice statusline
-NeoBundle 'scrooloose/nerdtree'       " filebrowser pane
-NeoBundle 'Xuyuanp/nerdtree-git-plugin' 
-NeoBundle 'kien/ctrlp.vim'            " quick search
-
-NeoBundle 'pearofducks/ansible-vim'   " Ansible Syntax
-NeoBundle 'f-breidenstein/icinga-vim' " Icinga2 Config File Syntax
-NeoBundle 'hashivim/vim-terraform'    " Terraform Modules incl. Syntax Highlight
-NeoBundle 'christoomey/vim-tmux-navigator' " Vim / Tmux Navigation 
+" vim-plug initialisation and auto installation {{{
 " -------------------------------------------------------------------
-" NeoBundle Script Exectuion {{{ 
+
+	if empty(glob('~/.config/nvim/autoload/plug.vim'))
+		echo 'Installing vim-plug ...' 
+		echo '' 
+		silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+					\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		" autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+	call plug#begin('~/.config/nvim/plugged')
+" }}} 
 " -------------------------------------------------------------------
-call neobundle#end()  
-filetype plugin indent on
+Plug 'iCyMind/NeoSolarized'           " Solarized Colorscheme for NeoVim using truecolor
+Plug 'cloudhead/neovim-fuzzy'         " Fuzzy file searcher 
+Plug 'w0rp/ale'                       " Asynchronous syntax checker
+Plug 'christoomey/vim-tmux-navigator' " Vim / Tmux Navigation 
+Plug 'scrooloose/nerdtree'            " The nerdtree
+Plug 'Xuyuanp/nerdtree-git-plugin'    " Show some nice git status in the nerdtree 
+Plug 'jlanzarotta/bufexplorer'        " buffexplorer for working with multiple buffers
+Plug 'airblade/vim-gitgutter'         " Show git information in front of the line numbers
+Plug 'vim-airline/vim-airline'        " Have a nice statusline
+Plug 'vim-airline/vim-airline-themes' " Have a nice statusline - themes
+Plug 'tpope/vim-commentary'           " Comment lines
+Plug 'Raimondi/delimitMate'           " Automatically close brackets and quotes etc.
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' } " Code completion 
+Plug 'SirVer/ultisnips'               " Snippet engine 
+Plug 'honza/vim-snippets'             " Some default snippets
+Plug 'godlygeek/tabular'              " Tabularize source
 
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck  
+" Syntax Highlights and Language specific stuff {{{ 
+Plug 'pearofducks/ansible-vim' " Ansible Syntax Highlighting
+Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax Highlighting
+" }}}
 
+" @TODO still missing is some autocomplete framework 
+" @TODO missing is a nice configuration for neovim-fuzzy
+
+" -------------------------------------------------------------------
+" vim-plug execution {{{
+	call plug#end()
 " }}}
 " -------------------------------------------------------------------
-set number nuw=5  " Activate line numbers and reserve 5 digits for it
-set cursorline    " Highlight the current line 
-set showmatch     " Highlight matching brackets
-set scrolloff=5   " Start scrolling at 5 lines left 
-set laststatus=2 
-set splitbelow    " Always create new splits below the current 
-set splitright    " Always create new vsplits right of the current 
-set clipboard=unnamed
-set backspace=indent,eol,start 
-set nowrap        " Don't wrap long lines 
+" configure NeoSolarized colorscheme {{{ 
+	" default value is "normal", Setting this option to "high" or "low" does use the 
+	" same Solarized palette but simply shifts some values up or down in order to 
+	" expand or compress the tonal range displayed.
+	let g:neosolarized_contrast = 'normal'
 
-set hlsearch ignorecase incsearch 
-set gdefault      " For search & replace automatically use global mode
-set smartcase     " If a capital letter is in the search term make search case sensitive
-set enc=utf-8
+	" Special characters such as trailing whitespace, tabs, newlines, when displayed 
+	" using ":set list" can be set to one of three levels depending on your needs. 
+	" Default value is "normal". Provide "high" and "low" options.
+	let g:neosolarized_visibility = 'normal'
 
-set tabstop=3 softtabstop=3 shiftwidth=3 noexpandtab
+	" I make vertSplitBar a transparent background color. If you like the origin solarized vertSplitBar
+	" style more, set this value to 0.
+	let g:neosolarized_vertSplitBgTrans = 1
 
-
-" -------------------------------------------------------------------
-" Plugin - vim-airline setup {{{
-" -------------------------------------------------------------------
-"let g:airline_theme='oceanicnext'
-"let g:airline_powerline_fonts=1
+	" If you wish to enable/disable NeoSolarized from displaying bold, underlined or italicized 
+	" typefaces, simply assign 1 or 0 to the appropriate variable. Default values:  
+	let g:neosolarized_bold = 1
+	let g:neosolarized_underline = 1
+	let g:neosolarized_italic = 0
+	
+	set background=dark
+	colorscheme NeoSolarized
 " }}}
-" -------------------------------------------------------------------
-" Plugin - oceanic-next color scheme setup {{{
-" -------------------------------------------------------------------
-
-" For Neovim 0.1.3 and 0.1.4
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-" Or if you have Neovim >= 0.1.5
-if (has("termguicolors"))
- set termguicolors
-endif
-
-set number
-
-" Theme
-syntax enable
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
+" configure neovim-fuzzy {{{
+	" neovim-fuzzy needs to have 
+	" * neovim >= 0.1.5
+  	" * fzy
+  	" * rg[1] or ag[2] >= 0.33.0
+	" installed.
+	nnoremap <C-p> :FuzzyOpen<CR>
+" }}}
+" configure ale {{{
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
 
 " }}}
-" -------------------------------------------------------------------
-" Plugin - NERDtree {{{
-" -------------------------------------------------------------------
-if !(has("gui_vimr"))
+" configure vim-tmux-navigator {{{ 
+" }}} 
+" configure nerdtree {{{
+if !(has('gui_vimr'))
 	autocmd vimenter * NERDTree
 	autocmd vimenter * wincmd w
 	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 endif
 " }}}
-" -------------------------------------------------------------------
-" Plugin - vim-terraform {{{
-" -------------------------------------------------------------------
-let g:terraform_align=1
-let g:terraform_fold_sections=1
-au BufRead,BufNewFile *.tf setlocal foldlevel=0
-
+" configure nerdtree-git-plugin {{{
+" }}}
+" configure bufexplorer {{{
+" }}}
+" configure vim-gitgutter {{{
+" }}}
+" configure vim-airline {{{ 
+let g:airline_powerline_fonts = 1
+" }}}
+" configure vim-airline-themes {{{
+let g:airline_theme='solarized'
+" }}}
+" configure vim-commentary {{{ 
+" }}}
+" configure delimitMate {{{
+" }}}
+" configure YouCompleteMe {{{
+let g:ycm_key_list_select_completion=[]
+let g:ycm_key_list_previous_completion=[]
+" }}}
+" configure ultisnips {{{ 
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+" }}}
+" configure vim-snippets {{{ 
+" }}} 
+" configure tabular {{{
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
 " }}}
 " -------------------------------------------------------------------
-" CtrlP Setup {{{
-" -------------------------------------------------------------------
-
-let g:ctrlp_match_window_bottom=1
-let g:ctrlp_show_hidden=1
+" configure ansible-vim {{{ 
+let g:ansible_unindent_after_newline = 1   " indentation will completely reset (unindent to column 0) after two newlines in insert-mode
+let g:ansible_name_highlight = 'd'         " This option enables/changes highlight of a name: key for self-documentation
+let g:ansible_extra_keywords_highlight = 1 " Highlight the following additional keywords in playbooks: register always_run changed_when failed_when no_log args vars delegate_to ignore_errors
 
 " }}}
 " -------------------------------------------------------------------
 " Filetype Setups {{{
+	" automatically reload .vimrc after it has been edited
+	autocmd BufWritePost .vimrc source ~/.vimrc
+	autocmd BufWritePost init.vim source ~/.config/nvim/init.vim
+" }}} 
 " -------------------------------------------------------------------
-
-" automatically reload .vimrc after it has been edited
-autocmd BufWritePost .vimrc source ~/.vimrc
-autocmd BufWritePost init.vim source ~/.config/nvim/init.vim
-
-augroup vagrant
-  au!
-  au BufRead,BufNewFile Vagrantfile set filetype=ruby
-augroup END
-
-" }}}
+set number nuw=5  " Activate line numbers and reserve 5 digits for it
+set splitbelow    " Always create new splits below the current 
+set splitright    " Always create new vsplits right of the current 
+set nowrap        " Don't wrap long lines 
+set cursorline    " Highlight the current line 
+set showmatch     " Highlight matching brackets
+set scrolloff=5   " Start scrolling at 5 lines left 
+" Setup searching {{{
+set hlsearch ignorecase incsearch 
+set gdefault      " For search & replace automatically use global mode
+set smartcase     " If a capital letter is in the search term make search case sensitive
+" }}} 
 " -------------------------------------------------------------------
 " Keyboard Setup {{{
-" -------------------------------------------------------------------
+let g:mapleader = ' '
 
-let mapleader = ","
-" Map ; to : in normal mode, to prevent common typos
-nnoremap ; : 
-noremap <c-f> :call ToggleFold()<cr>
+" Remap ESC
+imap fj <esc>
+imap jf <esc>
+" }}}
 " Stupid Shift Key Fixes {{{
-if has("user_commands")
+if has('user_commands')
 	command! -bang -nargs=* -complete=file E e<bang> <args>
 	command! -bang -nargs=* -complete=file W w<bang> <args>
 	command! -bang -nargs=* -complete=file Wq wq<bang> <args>
@@ -155,73 +177,12 @@ if has("user_commands")
 	command! -bang Qa qa<bang>
 endif
 " }}}
-" Searching {{{
-nmap <space> <esc>/<cr>
-nmap <c-space> <esc>?<cr>
-nmap <silent> <leader>/ <esc>:nohlsearch<cr> " clear highlighted search
-" }}}
-
-" }}}
 " -------------------------------------------------------------------
-" Functions {{{
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
 " -------------------------------------------------------------------
-function! ToggleFold() " {{{
-	if foldlevel('.') != 0
-		if foldclosed('.') < 0
-			foldclose
-		else
-			foldopen
-		endif
-	endif
-	echo
-endfun " }}}
-" }}}
-" -------------------------------------------------------------------
-" Unsorted stuff & Testing stuff {{{
-" -------------------------------------------------------------------
-
-
-" For Neovim 0.1.3 and 0.1.4
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-" Or if you have Neovim >= 0.1.5
-if (has("termguicolors"))
- set termguicolors
-endif
-
-set number
-
-" Theme
-syntax enable
-colorscheme OceanicNext
-
-" }}}
-
-" Checking very simple mode {{{
-"t | it is │ (s
-" set background=dark
-hi vertsplit ctermfg=238 ctermbg=235
-hi LineNr ctermfg=237
-hi StatusLine ctermfg=235 ctermbg=245
-hi StatusLineNC ctermfg=235 ctermbg=237
-hi Search ctermbg=58 ctermfg=15
-hi Default ctermfg=1
-hi clear SignColumn
-hi SignColumn ctermbg=235
-hi GitGutterAdd ctermbg=235 ctermfg=245
-hi GitGutterChange ctermbg=235 ctermfg=245
-hi GitGutterDelete ctermbg=235 ctermfg=245
-hi GitGutterChangeDelete ctermbg=235 ctermfg=245
-hi EndOfBuffer ctermfg=237 ctermbg=235
-
-set statusline=%=%P\ %f\:%l\:%c\ %m
-"set fillchars=vert:\│
-"set background=dark
-set fillchars=vert:\ ,stl:\ ,stlnc:\ 
-set laststatus=2
-set noshowmode
-" }}} 
-
-" -------------------------------------------------------------------
-" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
-
+" vim:set foldmarker={{{,}}} foldlevel=0 fdm=marker ts=2 sw=2 sts=2 et :
