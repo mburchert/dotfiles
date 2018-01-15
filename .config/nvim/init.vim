@@ -38,8 +38,9 @@ Plug 'honza/vim-snippets'             " Some default snippets
 Plug 'godlygeek/tabular'              " Tabularize source
 
 " Syntax Highlights and Language specific stuff {{{ 
-Plug 'pearofducks/ansible-vim' " Ansible Syntax Highlighting
+Plug 'pearofducks/ansible-vim'  " Ansible Syntax Highlighting
 Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax Highlighting
+Plug 'ekalinin/Dockerfile.vim'  " Dockerfile sytnax and snippets
 " }}}
 
 " @TODO still missing is some autocomplete framework 
