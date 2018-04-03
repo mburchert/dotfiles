@@ -2,9 +2,9 @@ scriptencoding utf-8
 " -------------------------------------------------------------------
 " enable true color support {{{
 " -------------------------------------------------------------------
-  if has('nvim') || has('termguicolors')
-    set termguicolors
-  endif
+""  if has('nvim') || has('termguicolors')
+""    set termguicolors
+""  endif
 " }}}
 " -------------------------------------------------------------------
 " vim-plug initialisation and auto installation {{{
@@ -20,7 +20,9 @@ scriptencoding utf-8
 	call plug#begin('~/.config/nvim/plugged')
 " }}} 
 " -------------------------------------------------------------------
-Plug 'iCyMind/NeoSolarized'           " Solarized Colorscheme for NeoVim using truecolor
+"Plug 'iCyMind/NeoSolarized'           " Solarized Colorscheme for NeoVim using truecolor
+"Plug 'altercation/vim-colors-solarized'
+Plug 'danilo-augusto/vim-afterglow'
 Plug 'cloudhead/neovim-fuzzy'         " Fuzzy file searcher 
 Plug 'w0rp/ale'                       " Asynchronous syntax checker
 Plug 'christoomey/vim-tmux-navigator' " Vim / Tmux Navigation 
@@ -51,30 +53,36 @@ Plug 'ekalinin/Dockerfile.vim'  " Dockerfile sytnax and snippets
 	call plug#end()
 " }}}
 " -------------------------------------------------------------------
-" configure NeoSolarized colorscheme {{{ 
-	" default value is "normal", Setting this option to "high" or "low" does use the 
-	" same Solarized palette but simply shifts some values up or down in order to 
-	" expand or compress the tonal range displayed.
-	let g:neosolarized_contrast = 'normal'
+colorscheme afterglow
+" " configure NeoSolarized colorscheme {{{ 
+" 	" default value is "normal", Setting this option to "high" or "low" does use the 
+" 	" same Solarized palette but simply shifts some values up or down in order to 
+" 	" expand or compress the tonal range displayed.
+" 	let g:neosolarized_contrast = 'normal'
 
-	" Special characters such as trailing whitespace, tabs, newlines, when displayed 
-	" using ":set list" can be set to one of three levels depending on your needs. 
-	" Default value is "normal". Provide "high" and "low" options.
-	let g:neosolarized_visibility = 'normal'
+" 	" Special characters such as trailing whitespace, tabs, newlines, when displayed 
+" 	" using ":set list" can be set to one of three levels depending on your needs. 
+" 	" Default value is "normal". Provide "high" and "low" options.
+" 	let g:neosolarized_visibility = 'normal'
 
-	" I make vertSplitBar a transparent background color. If you like the origin solarized vertSplitBar
-	" style more, set this value to 0.
-	let g:neosolarized_vertSplitBgTrans = 1
+" 	" I make vertSplitBar a transparent background color. If you like the origin solarized vertSplitBar
+" 	" style more, set this value to 0.
+" 	let g:neosolarized_vertSplitBgTrans = 1
 
-	" If you wish to enable/disable NeoSolarized from displaying bold, underlined or italicized 
-	" typefaces, simply assign 1 or 0 to the appropriate variable. Default values:  
-	let g:neosolarized_bold = 1
-	let g:neosolarized_underline = 1
-	let g:neosolarized_italic = 0
+" 	" If you wish to enable/disable NeoSolarized from displaying bold, underlined or italicized 
+" 	" typefaces, simply assign 1 or 0 to the appropriate variable. Default values:  
+" 	let g:neosolarized_bold = 1
+" 	let g:neosolarized_underline = 1
+" 	let g:neosolarized_italic = 0
 	
-	set background=dark
-	colorscheme NeoSolarized
-" }}}
+" 	set background=dark
+" 	colorscheme NeoSolarized
+" " }}}
+" configure solarized theme 
+"syntax enable
+"set background=dark
+"colorscheme solarized
+
 " configure neovim-fuzzy {{{
 	" neovim-fuzzy needs to have 
 	" * neovim >= 0.1.5
@@ -108,7 +116,8 @@ endif
 let g:airline_powerline_fonts = 1
 " }}}
 " configure vim-airline-themes {{{
-let g:airline_theme='solarized'
+"let g:airline_theme='solarized'
+let g:airline_theme = 'afterglow'
 " }}}
 " configure vim-commentary {{{ 
 " }}}
