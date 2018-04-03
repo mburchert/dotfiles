@@ -1,4 +1,4 @@
-ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=false
 # ------------------------------------------------------------------------------------
 # Setup completion engine {{{
 # ------------------------------------------------------------------------------------
@@ -110,6 +110,7 @@ alias vimrc='vim ~/.config/nvim/init.vim'
 alias zshrc='vim ~/.zshrc'
 alias sshconfig='vim ~/.ssh/config'
 alias tmuxconfig='vim ~/.tmux.conf'
+alias known_hosts='vim ~/.ssh/known_hosts'
 
 alias -g L=' | less'
 alias -g G=' | grep -i --color=auto '
