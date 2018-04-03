@@ -15,5 +15,5 @@ brew 'the_silver_searcher'
 #tap 'caskroom/cask'
 #brew 'brew-cask'
 
-cask 'iterm2'
-cask 'commander-one'
+#cask 'iterm2'
+#cask 'commander-one'
