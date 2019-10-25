@@ -9,11 +9,16 @@ brew 'reattach-to-user-namespace'
 brew 'tmux'
 brew 'fzy'
 brew 'the_silver_searcher'
+brew 'bat'
+brew 'exa'
+brew 'ripgrep'
+brew 'fd'
 
 # brew 'ansible-lint' 
 
 #tap 'caskroom/cask'
 #brew 'brew-cask'
 
-#cask 'iterm2'
-#cask 'commander-one'
+cask 'fork'
+cask 'iterm2'
+cask 'commander-one'
