@@ -23,7 +23,7 @@ LP_LOAD_THRESHOLD=60
 # Display the temperature when the temperate is above this threshold (in
 # degrees Celsius).
 # Recommended value is 60
-LP_TEMP_THRESHOLD=60
+LP_TEMP_THRESHOLD=30
 
 # Use the shorten path feature if the path is too long to fit in the prompt
 # line.
