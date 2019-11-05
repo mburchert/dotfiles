@@ -124,6 +124,7 @@ let g:airline_theme = 'afterglow'
 " configure delimitMate {{{
 " }}}
 " configure YouCompleteMe {{{
+let g:ycm_server_python_interpreter="/usr/bin/python2.7"
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
 " }}}
@@ -152,9 +153,12 @@ let g:ansible_extra_keywords_highlight = 1 " Highlight the following additional 
 	" automatically reload .vimrc after it has been edited
 	autocmd BufWritePost .vimrc source ~/.vimrc
 	autocmd BufWritePost init.vim source ~/.config/nvim/init.vim
+  autocmd BufWritePost *.tf silent !terraform fmt %
+  autocmd BufWritePost *.tf e
 " }}} 
 " -------------------------------------------------------------------
 set number nuw=5  " Activate line numbers and reserve 5 digits for it
+set relativenumber " Show relative line numbers
 set splitbelow    " Always create new splits below the current 
 set splitright    " Always create new vsplits right of the current 
 set nowrap        " Don't wrap long lines 
@@ -166,6 +170,7 @@ set hlsearch ignorecase incsearch
 set gdefault      " For search & replace automatically use global mode
 set smartcase     " If a capital letter is in the search term make search case sensitive
 " }}} 
+set shell=/bin/zsh
 " -------------------------------------------------------------------
 " Keyboard Setup {{{
 let g:mapleader = ' '
