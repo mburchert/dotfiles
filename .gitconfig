@@ -1,5 +1,15 @@
 # This is Git's per-user configuration file.
 [user]
 # Please adapt and uncomment the following lines:
-name = Martin Burchert
-email = eremit@adm1n.de
+	name = Martin Burchert
+	email = martin.burchert@numberfour.eu
+
+[alias]
+	unstage = reset HEAD --
+	branches = branch -a
+	remotes = remote -v
+	stashes = stash list
+
+
+[push]
+	default = current
