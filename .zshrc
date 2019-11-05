@@ -1,4 +1,4 @@
-ZSH_TMUX_AUTOSTART=false
+ZSH_TMUX_AUTOSTART=true
 # ------------------------------------------------------------------------------------
 # Setup completion engine {{{
 # ------------------------------------------------------------------------------------
@@ -218,3 +218,12 @@ fi
 # }}}
 # ------------------------------------------------------------------------------------
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
+
+
+
+eval $(thefuck --alias)
+
+# alias ls="exa -lha --git" 
+#alias ls -als="exa -lhas name --git"
+alias cat=bat
+
