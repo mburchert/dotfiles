@@ -1,9 +1,9 @@
-ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=false
 # ------------------------------------------------------------------------------------
 # Setup completion engine {{{
 # ------------------------------------------------------------------------------------
 
-autoload -U compinit && compinit -i 
+autoload -U compinit && compinit -i
 
 setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
 setopt ALWAYS_TO_END       # Move cursor to the end of a completed word.
@@ -69,27 +69,30 @@ zstyle -e ':completion:*:hosts' hosts 'reply=(
 	${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
 )'
 
-# }}} 
+# }}}
 # ------------------------------------------------------------------------------------
 # Setup colors {{{
 # ------------------------------------------------------------------------------------
 
-autoload -U colors && colors 
+autoload -U colors && colors
+export LSCOLORS="exfxcxdxbxegedabagacad"
+export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
+export GREP_COLOR='1;33'
 
 # }}}
 # ------------------------------------------------------------------------------------
 # Install antigen addons {{{
 # ------------------------------------------------------------------------------------
 
-source /usr/local/share/antigen/antigen.zsh
+#source /usr/local/share/antigen/antigen.zsh
 
-antigen bundle nojhan/liquidprompt
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle psprint/zsh-navigation-tools
-antigen bundle greymd/docker-zsh-completion
-antigen apply
+# antigen bundle nojhan/liquidprompt
+# antigen bundle zsh-users/zsh-completions
+# antigen bundle zsh-users/zsh-syntax-highlighting
+# antigen bundle zsh-users/zsh-autosuggestions
+# antigen bundle psprint/zsh-navigation-tools
+# antigen bundle greymd/docker-zsh-completion
+# antigen apply
 
 # }}}
 # ------------------------------------------------------------------------------------
@@ -103,14 +106,17 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
 
 alias ls='ls -GFls '
 alias grep='grep --color=auto'
-alias tmux='tmux -2'
+alias tmux='tmux -2 -u'
 alias vim='nvim'
 
 alias vimrc='vim ~/.config/nvim/init.vim'
 alias zshrc='vim ~/.zshrc'
+alias zshrclocal='vim ~/.zshrc_local'
 alias sshconfig='vim ~/.ssh/config'
 alias tmuxconfig='vim ~/.tmux.conf'
 alias known_hosts='vim ~/.ssh/known_hosts'
+
+alias ':q'=exit
 
 alias -g L=' | less'
 alias -g G=' | grep -i --color=auto '
@@ -148,45 +154,44 @@ setopt share_history # share command history data
 # Configure vi mode and show status in the prompt {{{
 # ------------------------------------------------------------------------------------
 
-bindkey -v 
+# bindkey -v
+# #
+# #function zle-line-init zle-keymap-select {
+# function zle-line-init zle-keymap-select {
+#     VIM_PROMPT="%{$fg[blue]%} [% NORMAL ]%  %{$reset_color%}"
+#     VIM_PROMPT2="%{$fg[red]%} [% INSERT ]%  %{$reset_color%}"
+#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/$VIM_PROMPT2}"
+#     RPS2=$RPS1
+#     zle reset-prompt
+# }
 #
-#function zle-line-init zle-keymap-select {
-function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg[blue]%} [% NORMAL ]%  %{$reset_color%}"
-    VIM_PROMPT2="%{$fg[red]%} [% INSERT ]%  %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/$VIM_PROMPT2}"
-    RPS2=$RPS1
-    zle reset-prompt
-}
-
-zle -N zle-line-init
-zle -N zle-keymap-select
-export KEYTIMEOUT=1
+# zle -N zle-line-init
+# zle -N zle-keymap-select
+# export KEYTIMEOUT=1
 
 # }}}
 # ------------------------------------------------------------------------------------
 # Configure znt-navigation-tools for History and CD {{{
 # ------------------------------------------------------------------------------------
 
-# Enable the history widget and bind ctrl+r to show it
-autoload znt-history-widget
-zle -N znt-history-widget
-bindkey "^R" znt-history-widget
-
-# Enable the cd widget and bind ctrl+b to show it 
-zle -N znt-cd-widget
-bindkey "^B" znt-cd-widget
-
-# Enable the kill widget and bind ctrl+y to show it 
-# @TODO See if this is actually used
-zle -N znt-kill-widget
-bindkey "^Y" znt-kill-widget
+# # Enable the history widget and bind ctrl+r to show it
+# autoload znt-history-widget
+# zle -N znt-history-widget
+# bindkey "^R" znt-history-widget
+#
+# # Enable the cd widget and bind ctrl+b to show it
+# zle -N znt-cd-widget
+# bindkey "^B" znt-cd-widget
+#
+# # Enable the kill widget and bind ctrl+y to show it
+# # @TODO See if this is actually used
+# zle -N znt-kill-widget
+# bindkey "^Y" znt-kill-widget
 
 # }}}
 # ------------------------------------------------------------------------------------
 # Start shell in tmux session if configured {{{
 # ------------------------------------------------------------------------------------
-
 if [ -n $ZSH_TMUX_AUTOSTART -a "$ZSH_TMUX_AUTOSTART" = "true" ]; then
 	if command -v tmux > /dev/null; then
 		if [[ ! $TERM =~ screen ]] && [ -z $TMUX ]; then
@@ -198,6 +203,7 @@ if [ -n $ZSH_TMUX_AUTOSTART -a "$ZSH_TMUX_AUTOSTART" = "true" ]; then
 		fi
 	fi
 fi
+
 ### }}}
 # ------------------------------------------------------------------------------------
 # Set the path to the users bin if it exists {{{
@@ -210,20 +216,50 @@ fi
 # ------------------------------------------------------------------------------------
 # If there is a .zshrc_local source it {{{
 # ------------------------------------------------------------------------------------
-
 if [ -e $HOME/.zshrc_local ]; then
 	source $HOME/.zshrc_local
 fi
 
 # }}}
 # ------------------------------------------------------------------------------------
-# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
-
-
-
+# Setup thefuck {{{
+# ------------------------------------------------------------------------------------
 eval $(thefuck --alias)
 
-# alias ls="exa -lha --git" 
-#alias ls -als="exa -lhas name --git"
-alias cat=bat
+# }}}
+# ------------------------------------------------------------------------------------
+# Install zplugin and plugins {{{
+# ------------------------------------------------------------------------------------
+source "$HOME/.zplugin/bin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
 
+zplugin light zsh-users/zsh-autosuggestions
+zplugin light zdharma/fast-syntax-highlighting
+
+# }}}
+# ------------------------------------------------------------------------------------
+# Setup starship as the prompt {{{
+# ------------------------------------------------------------------------------------
+eval "$(starship init zsh)"
+
+# }}}
+# ------------------------------------------------------------------------------------
+# Setup autojump {{{
+# ------------------------------------------------------------------------------------
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# }}}
+
+..() {
+  range=$(eval "echo '{1..$1}'");
+  toPrint="'../%.0s' $range";
+  printfToEval=$(echo "printf $toPrint");
+  toCd=$(eval $printfToEval);
+  eval "cd $toCd";
+  pwd;
+}
+
+# ------------------------------------------------------------------------------------
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
+fpath+=${ZDOTDIR:-~}/.zsh_functions
