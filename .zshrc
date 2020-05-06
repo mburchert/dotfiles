@@ -118,6 +118,16 @@ alias known_hosts='vim ~/.ssh/known_hosts'
 
 alias ':q'=exit
 
+alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
+
+alias aws-accountlist='cat ~/.aws/accounts'
+alias aws-ssh='aws ssm start-session --target'
+alias list-instances='aws --output table --no-paginate ec2 describe-instances --query "Reservations[].Instances[].[InstanceId, Tags[?Key==\`Name\`].Value | [0], PrivateIpAddress, PrivateDnsName, InstanceType]"'
+alias pgsql='docker run -it --rm jbergknoff/postgresql-client'
+alias git='lab'
+alias gitclean="git branch | grep -v master | awk '{ print \"git branch -d \"\$1}' | sh"
+
+
 alias -g L=' | less'
 alias -g G=' | grep -i --color=auto '
 # }}}
@@ -260,6 +270,14 @@ eval "$(starship init zsh)"
   pwd;
 }
 
+# HSTR configuration - add this to ~/.zshrc
+alias hh=hstr                    # hh to be alias for hstr
+setopt histignorespace           # skip cmds w/ leading space from history
+export HSTR_CONFIG=hicolor,prompt-bottom       # get more colors
+bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+
+
+fpath+=${ZDOTDIR:-~}/.zsh_functions
+
 # ------------------------------------------------------------------------------------
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
-fpath+=${ZDOTDIR:-~}/.zsh_functions
