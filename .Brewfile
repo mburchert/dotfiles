@@ -5,6 +5,7 @@ brew 'fzf'
 brew 'mas'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
+brew 'coreutils'
 
 cask 'appcleaner'
 cask 'sublime-text'
