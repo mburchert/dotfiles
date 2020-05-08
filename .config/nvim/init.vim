@@ -1,4 +1,14 @@
 " @todo Deoplete for Terraform: https://github.com/juliosueiras/vim-terraform-completion#deoplete-config
+function! g:BuffetSetCustomColors()
+  hi! BuffetCurrentBuffer cterm=NONE ctermbg=235 ctermfg=33  guibg=#00FF00 guifg=#000000
+  hi! BuffetModBuffer     cterm=NONE ctermbg=235 ctermfg=166 guibg=#00FF00 guifg=#000000 
+" BuffetActiveBuffer - an active buffer (a non-current buffer visible in a non-current window).
+" BuffetModCurrentBuffer - the current buffer when modified.
+" BuffetModActiveBuffer - a modified active buffer (a non-current buffer visible in a non-current window).
+  hi! BuffetBuffer  cterm=NONE ctermbg=235 ctermfg=33 guibg=#00FF00 guifg=#000000
+  hi! BuffetTrunc  cterm=NONE ctermbg=235 ctermfg=33 guibg=#00FF00 guifg=#000000
+  hi! BuffetTab cterm=NONE ctermbg=235 ctermfg=33 guibg=#00FF00 guifg=#000000
+endfunction
 " -------------------------------------------------------------------
 " vim-plug initialisation and auto installation {{{
 " -------------------------------------------------------------------
@@ -11,7 +21,8 @@
   call plug#begin('~/.config/nvim/plugged')
 " }}}
 " plugins {{{
-  Plug 'iCyMind/NeoSolarized'           " Solarized Colorscheme for NeoVim using truecolor
+"  Plug 'iCyMind/NeoSolarized'           " Solarized Colorscheme for NeoVim using truecolor
+  Plug 'altercation/vim-colors-solarized' " Solarized Colorscheme 
   Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
   Plug 'scrooloose/nerdtree'            " The nerdtree
   Plug 'Xuyuanp/nerdtree-git-plugin'    " Show some nice git status in the nerdtree 
@@ -43,17 +54,20 @@
   set scrolloff=5          " start scrolling if 5 lines left on screen 
   set termencoding=utf-8
   set relativenumber       " Show relative line numbers
-  " }}} 
-  set termguicolors
-  set background=dark
-
-  colorscheme NeoSolarized
-  " Enable true color 启用终端24位色
-  if exists('+termguicolors')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    set termguicolors
-  endif
+  " }}}
+set background=dark
+let g:solarized_termcolors=256
+colorscheme solarized
+  "  set termguicolors
+"  set background=dark
+"let g:solarized_termcolors=256
+"  colorscheme NeoSolarized
+"  " Enable true color 启用终端24位色
+"  if exists('+termguicolors')
+"    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"    set termguicolors
+"  endif
   " Show special characters 
   set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
   highlight NonText guifg=#3f3f3f
@@ -125,6 +139,11 @@
   nmap <leader>8 <Plug>BuffetSwitch(8)
   nmap <leader>9 <Plug>BuffetSwitch(9)
   nmap <leader>0 <Plug>BuffetSwitch(10)
+
+
+
+
+
 " }}}
 " -------------------------------------------------------------------
 function! ToggleFold() " {{{
@@ -139,4 +158,5 @@ function! ToggleFold() " {{{
 endfun " }}}
 noremap <c-f> :call ToggleFold()<cr>
 set mouse=a
+
 " vim:set foldmarker={{{,}}} foldlevel=0 fdm=marker ts=2 sw=2 sts=2 et :
