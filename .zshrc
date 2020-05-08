@@ -98,13 +98,13 @@ export GREP_COLOR='1;33'
 # ------------------------------------------------------------------------------------
 # aliases Configure autosuggest {{{
 # ------------------------------------------------------------------------------------
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 # }}}
 # ------------------------------------------------------------------------------------
 # Some handy aliases {{{
 # ------------------------------------------------------------------------------------
 
-alias ls='ls -GFls '
+#alias ls='ls -GFls '
 alias grep='grep --color=auto'
 alias tmux='tmux -2 -u'
 alias vim='nvim'
@@ -126,10 +126,17 @@ alias list-instances='aws --output table --no-paginate ec2 describe-instances --
 alias pgsql='docker run -it --rm jbergknoff/postgresql-client'
 alias git='lab'
 alias gitclean="git branch | grep -v master | awk '{ print \"git branch -d \"\$1}' | sh"
-
+alias rm='trash'
 
 alias -g L=' | less'
 alias -g G=' | grep -i --color=auto '
+alias -g STDALL=' >&2 2>&1'
+
+# THe following aliases need to have coreutils installed
+#alias ls='gls --color=auto'
+alias dircolors='gdircolors'
+#alias ls='exa -la'
+alias cat='bat'
 # }}}
 # ------------------------------------------------------------------------------------
 # Command history configuration {{{
@@ -270,6 +277,9 @@ eval "$(starship init zsh)"
   pwd;
 }
 
+
+export EDITOR='vim'
+
 # HSTR configuration - add this to ~/.zshrc
 alias hh=hstr                    # hh to be alias for hstr
 setopt histignorespace           # skip cmds w/ leading space from history
@@ -278,6 +288,11 @@ bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode che
 
 
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-
+eval $(dircolors ~/.dircolors)
+alias mux='tmuxinator start default'
+alias muxdev='tmuxinator start gitlab'
+function ls() {
+  exa ${1//s/} ${2};
+}
 # ------------------------------------------------------------------------------------
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
