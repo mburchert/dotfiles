@@ -1,3 +1,21 @@
+# .Brewfile
+## Uses: https://github.com/Homebrew/homebrew-bundle
+# Run with: brew bundle --file=$HOME/.Brewfile
+
+#brew 'antigen'
+brew 'yadm'
+brew 'zsh'
+brew 'neovim'
+#brew 'reattach-to-user-namespace'
+#brew 'tmux'
+#brew 'fzy'
+#brew 'the_silver_searcher'
+brew 'bat'
+brew 'exa'
+#brew 'ripgrep'
+#brew 'fd'
+
+
 brew 'thefuck'
 brew 'starship'
 brew 'autojump'
@@ -8,15 +26,15 @@ brew 'reattach-to-user-namespace'
 brew 'coreutils'
 
 cask 'appcleaner'
-cask 'sublime-text'
+#cask 'sublime-text'
 cask '1password'
 cask 'whatsapp'
 cask 'flycut'
 cask 'tunnelblick'
 cask 'slack'
-cask 'evernote'
+#cask 'evernote'
 cask 'rectangle'
-cask 'spotify'
+#cask 'spotify'
 cask 'font-fira-code'
 cask 'dozer'
 
