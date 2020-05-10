@@ -89,6 +89,7 @@ colorscheme solarized
 
   autocmd BufReadPost *.tf set foldmarker={,} foldlevel=0 ts=2 sw=2 sts=2
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd BufReadPost *.yaml.tmpl set filetype=yaml
 " }}} 
 " -------------------------------------------------------------------
 " Stupid Shift Key Fixes {{{
