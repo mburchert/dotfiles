@@ -247,7 +247,7 @@ eval $(thefuck --alias)
 # ------------------------------------------------------------------------------------
 # Install zplugin and plugins {{{
 # ------------------------------------------------------------------------------------
-source "$HOME/.zplugin/bin/zplugin.zsh"
+source "$HOME/.zinit/bin/zplugin.zsh"
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 
@@ -288,7 +288,7 @@ bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode che
 
 
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-eval $(dircolors ~/.dircolors)
+#eval $(dircolors ~/.dircolors)
 alias mux='tmuxinator start default'
 alias muxdev='tmuxinator start gitlab'
 function ls() {
@@ -296,3 +296,4 @@ function ls() {
 }
 # ------------------------------------------------------------------------------------
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
+### End of Zinit's installer chunk
