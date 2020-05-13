@@ -1,5 +1,12 @@
 ZSH_TMUX_AUTOSTART=false
 # ------------------------------------------------------------------------------------
+# Some environment variables {{{
+# ------------------------------------------------------------------------------------
+export EDITOR='vim'
+export ZSHRC_LOCAL=n3e4can525dorfv4qkeglzfv3y
+export SSH_KEYS=(v5j5w5ru7bbppftz64fvc5mo6q e2f5oe5oq5fm5bv5oory5yilpe)
+# }}}
+# ------------------------------------------------------------------------------------
 # Setup completion engine {{{
 # ------------------------------------------------------------------------------------
 
@@ -81,22 +88,7 @@ export GREP_COLOR='1;33'
 
 # }}}
 # ------------------------------------------------------------------------------------
-# Install antigen addons {{{
-# ------------------------------------------------------------------------------------
-
-#source /usr/local/share/antigen/antigen.zsh
-
-# antigen bundle nojhan/liquidprompt
-# antigen bundle zsh-users/zsh-completions
-# antigen bundle zsh-users/zsh-syntax-highlighting
-# antigen bundle zsh-users/zsh-autosuggestions
-# antigen bundle psprint/zsh-navigation-tools
-# antigen bundle greymd/docker-zsh-completion
-# antigen apply
-
-# }}}
-# ------------------------------------------------------------------------------------
-# aliases Configure autosuggest {{{
+# Configure autosuggest {{{
 # ------------------------------------------------------------------------------------
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 # }}}
@@ -104,39 +96,51 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 # Some handy aliases {{{
 # ------------------------------------------------------------------------------------
 
-#alias ls='ls -GFls '
 alias grep='grep --color=auto'
 alias tmux='tmux -2 -u'
 alias vim='nvim'
+alias git='lab'
+alias rm='trash'
+alias pgsql='docker run -it --rm jbergknoff/postgresql-client'
+alias cat='bat'
 
+# some important config files i'm always tinkering
 alias vimrc='vim ~/.config/nvim/init.vim'
 alias zshrc='vim ~/.zshrc'
-alias zshrclocal='vim ~/.zshrc_local'
 alias sshconfig='vim ~/.ssh/config'
 alias tmuxconfig='vim ~/.tmux.conf'
 alias known_hosts='vim ~/.ssh/known_hosts'
 
+# vim muscle memory
 alias ':q'=exit
 
+# some handy things 
 alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
-
 alias aws-accountlist='cat ~/.aws/accounts'
 alias aws-ssh='aws ssm start-session --target'
 alias list-instances='aws --output table --no-paginate ec2 describe-instances --query "Reservations[].Instances[].[InstanceId, Tags[?Key==\`Name\`].Value | [0], PrivateIpAddress, PrivateDnsName, InstanceType]"'
-alias pgsql='docker run -it --rm jbergknoff/postgresql-client'
-alias git='lab'
 alias gitclean="git branch | grep -v master | awk '{ print \"git branch -d \"\$1}' | sh"
-alias rm='trash'
+alias mux='tmuxinator start default'
+alias muxdev='tmuxinator start gitlab'
+alias oplogin='op get account &> /dev/null || eval $(op signin burchert)'
+alias oplist='oplogin && op list items | jq -r ".[] | [.uuid, .overview.title] | @tsv"'
+alias secure='oplogin && source <(op get item ${ZSHRC_LOCAL} | jq -r ".details | .notesPlain")'
 
+function reset-agent() {
+  oplogin; 
+  ssh-add -D; 
+  for i in ${SSH_KEYS}
+  do 
+    echo adding ${i}
+    op get item ${i} | jq -r ".details | .notesPlain" | ssh-add -k - ; 
+  done; 
+  ssh-add -l
+}
+# some suffix magic 
 alias -g L=' | less'
 alias -g G=' | grep -i --color=auto '
 alias -g STDALL=' >&2 2>&1'
 
-# THe following aliases need to have coreutils installed
-#alias ls='gls --color=auto'
-alias dircolors='gdircolors'
-#alias ls='exa -la'
-alias cat='bat'
 # }}}
 # ------------------------------------------------------------------------------------
 # Command history configuration {{{
@@ -168,7 +172,7 @@ setopt share_history # share command history data
 
 # }}}
 # ------------------------------------------------------------------------------------
-# Configure vi mode and show status in the prompt {{{
+# DISABLED: Configure vi mode and show status in the prompt {{{
 # ------------------------------------------------------------------------------------
 
 # bindkey -v
@@ -188,37 +192,18 @@ setopt share_history # share command history data
 
 # }}}
 # ------------------------------------------------------------------------------------
-# Configure znt-navigation-tools for History and CD {{{
-# ------------------------------------------------------------------------------------
-
-# # Enable the history widget and bind ctrl+r to show it
-# autoload znt-history-widget
-# zle -N znt-history-widget
-# bindkey "^R" znt-history-widget
-#
-# # Enable the cd widget and bind ctrl+b to show it
-# zle -N znt-cd-widget
-# bindkey "^B" znt-cd-widget
-#
-# # Enable the kill widget and bind ctrl+y to show it
-# # @TODO See if this is actually used
-# zle -N znt-kill-widget
-# bindkey "^Y" znt-kill-widget
-
-# }}}
-# ------------------------------------------------------------------------------------
 # Start shell in tmux session if configured {{{
 # ------------------------------------------------------------------------------------
 if [ -n $ZSH_TMUX_AUTOSTART -a "$ZSH_TMUX_AUTOSTART" = "true" ]; then
-	if command -v tmux > /dev/null; then
-		if [[ ! $TERM =~ screen ]] && [ -z $TMUX ]; then
-			if tmux has-session -t master; then
-				exec tmux new-session -A -t master \; new-window
-			else
-				exec tmux new-session -A -s master -n main
-			fi
-		fi
-	fi
+  if command -v tmux > /dev/null; then
+    if [[ ! $TERM =~ screen ]] && [ -z $TMUX ]; then
+      if tmux has-session -t master; then
+        exec tmux new-session -A -t master \; new-window
+      else
+        exec tmux new-session -A -s master -n main
+      fi
+    fi
+  fi
 fi
 
 ### }}}
@@ -226,7 +211,7 @@ fi
 # Set the path to the users bin if it exists {{{
 # ------------------------------------------------------------------------------------
 if [ -e $HOME/bin ]; then
-	PATH="$HOME/bin:$PATH"
+  PATH="$HOME/bin:$PATH"
 fi
 
 ### }}}
@@ -234,7 +219,7 @@ fi
 # If there is a .zshrc_local source it {{{
 # ------------------------------------------------------------------------------------
 if [ -e $HOME/.zshrc_local ]; then
-	source $HOME/.zshrc_local
+  source $HOME/.zshrc_local
 fi
 
 # }}}
@@ -267,7 +252,32 @@ eval "$(starship init zsh)"
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # }}}
-
+# ------------------------------------------------------------------------------------
+# HSTR for history configuration {{{
+# ------------------------------------------------------------------------------------
+alias hh=hstr                    # hh to be alias for hstr
+setopt histignorespace           # skip cmds w/ leading space from history
+export HSTR_CONFIG=hicolor,prompt-bottom       # get more colors
+bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+# }}}
+# ------------------------------------------------------------------------------------
+# Setup exa as ls replacement {{{
+#   This is used, since i cannot get ls -als out of my muscle memory and -s without
+#   params has a different meaning in exa. This way the -s is cut out of the command
+#   parameters.
+# ------------------------------------------------------------------------------------
+function ls() {
+  exa ${1//s/} ${2};
+}
+# }}}
+# ------------------------------------------------------------------------------------
+# Load external function definitions {{{
+# ------------------------------------------------------------------------------------
+fpath+=${ZDOTDIR:-~}/.zsh_functions
+# }}}
+# ------------------------------------------------------------------------------------
+# -- EXPERIMENTAL STUFF -- {{{
+# ------------------------------------------------------------------------------------
 ..() {
   range=$(eval "echo '{1..$1}'");
   toPrint="'../%.0s' $range";
@@ -276,24 +286,6 @@ eval "$(starship init zsh)"
   eval "cd $toCd";
   pwd;
 }
-
-
-export EDITOR='vim'
-
-# HSTR configuration - add this to ~/.zshrc
-alias hh=hstr                    # hh to be alias for hstr
-setopt histignorespace           # skip cmds w/ leading space from history
-export HSTR_CONFIG=hicolor,prompt-bottom       # get more colors
-bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
-
-
-fpath+=${ZDOTDIR:-~}/.zsh_functions
-#eval $(dircolors ~/.dircolors)
-alias mux='tmuxinator start default'
-alias muxdev='tmuxinator start gitlab'
-function ls() {
-  exa ${1//s/} ${2};
-}
+# }}}
 # ------------------------------------------------------------------------------------
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker :
-### End of Zinit's installer chunk
