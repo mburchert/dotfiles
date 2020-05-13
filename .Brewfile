@@ -15,7 +15,7 @@ brew 'exa'
 #brew 'ripgrep'
 #brew 'fd'
 
-
+brew 'tmuxinator'
 brew 'thefuck'
 brew 'starship'
 brew 'autojump'
