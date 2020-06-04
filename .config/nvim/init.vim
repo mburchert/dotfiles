@@ -67,10 +67,12 @@ endfunction
   set scrolloff=5          " start scrolling if 5 lines left on screen 
   set termencoding=utf-8
   set relativenumber       " Show relative line numbers
-  set mouse=a
+  "set mouse=a
   set colorcolumn=80,100
   set cot=noselect,menu,menuone
-  " }}}
+" Give more space for displaying messages.
+set cmdheight=2
+" }}}
 " -------------------------------------------------------------------
 " colorscheme setting {{{
 " -------------------------------------------------------------------
@@ -252,6 +254,8 @@ noremap <c-f> :call ToggleFold()<cr>
 " -------------------------------------------------------------------
 " (Optional)Remove Info(Preview) window
 "set completeopt-=preview
+
+let g:coc_global_extensions = ['coc-solargraph', 'coc-vimlsp', 'coc-yaml', 'coc-json', 'coc-go']
 
 "call deoplete#initialize()
 " vim:set foldmarker={{{,}}} foldlevel=0 fdm=marker ts=2 sw=2 sts=2 et :
