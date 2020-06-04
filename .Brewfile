@@ -24,6 +24,7 @@ brew 'mas'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'coreutils'
+brew 'node'
 
 cask 'appcleaner'
 #cask 'sublime-text'
