@@ -1,14 +1,19 @@
-" @todo Deoplete for Terraform: https://github.com/juliosueiras/vim-terraform-completion#deoplete-config
+" -------------------------------------------------------------------
+" Plugin buffet: Configuration {{{ 
+" This needs to be done before loading the plugin otherwise it will 
+" not be triggered correctly
+" -------------------------------------------------------------------
 function! g:BuffetSetCustomColors()
-  hi! BuffetCurrentBuffer cterm=NONE ctermbg=235 ctermfg=33  guibg=#00FF00 guifg=#000000
-  hi! BuffetModBuffer     cterm=NONE ctermbg=235 ctermfg=166 guibg=#00FF00 guifg=#000000 
+  hi! BuffetCurrentBuffer cterm=NONE ctermbg=66  ctermfg=33  guibg=#bdae93 guifg=#282828
 " BuffetActiveBuffer - an active buffer (a non-current buffer visible in a non-current window).
+  hi! BuffetBuffer        cterm=NONE ctermbg=214 ctermfg=33  guibg=#504945 guifg=#bdae93
 " BuffetModCurrentBuffer - the current buffer when modified.
 " BuffetModActiveBuffer - a modified active buffer (a non-current buffer visible in a non-current window).
-  hi! BuffetBuffer  cterm=NONE ctermbg=235 ctermfg=33 guibg=#00FF00 guifg=#000000
-  hi! BuffetTrunc  cterm=NONE ctermbg=235 ctermfg=33 guibg=#00FF00 guifg=#000000
-  hi! BuffetTab cterm=NONE ctermbg=235 ctermfg=33 guibg=#00FF00 guifg=#000000
+  hi! BuffetModBuffer     cterm=NONE ctermbg=235 ctermfg=166 guibg=#00FFFF guifg=#000000 
+  hi! BuffetTrunc         cterm=NONE ctermbg=235 ctermfg=33  guibg=#FF0000 guifg=#000000
+  hi! BuffetTab           cterm=NONE ctermbg=241 ctermfg=33  guibg=#665c54 guifg=#000000
 endfunction
+" }}}
 " -------------------------------------------------------------------
 " vim-plug initialisation and auto installation {{{
 " -------------------------------------------------------------------
@@ -21,19 +26,27 @@ endfunction
   call plug#begin('~/.config/nvim/plugged')
 " }}}
 " plugins {{{
-"  Plug 'iCyMind/NeoSolarized'           " Solarized Colorscheme for NeoVim using truecolor
-  Plug 'altercation/vim-colors-solarized' " Solarized Colorscheme 
+  "Plug 'iCyMind/NeoSolarized'           " Solarized Colorscheme for NeoVim using truecolor
+  "Plug 'altercation/vim-colors-solarized' " Solarized Colorscheme 
+  Plug 'jacoborus/tender.vim'
+  Plug 'gruvbox-community/gruvbox'
   Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
   Plug 'scrooloose/nerdtree'            " The nerdtree
   Plug 'Xuyuanp/nerdtree-git-plugin'    " Show some nice git status in the nerdtree 
   Plug 'christoomey/vim-tmux-navigator' " Vim / Tmux Navigation 
   Plug 'dense-analysis/ale'             " Asynchronous Lint Engine 
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'juliosueiras/vim-terraform-completion'
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'airblade/vim-gitgutter'         " Show git information in front of the line numbers
   Plug 'bagrat/vim-buffet'              " Buffet for showing the tabline
+  "Plug 'vim-syntastic/syntastic'
   " Syntax Files
   Plug 'ekalinin/Dockerfile.vim'  " Dockerfile sytnax and snippets
   Plug 'hashivim/vim-terraform'
+  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+  Plug 'aserebryakov/vim-todo-lists'
+  " Experimental Plugins
 " }}}
 " vim-plug execution {{{
   call plug#end()
@@ -54,31 +67,77 @@ endfunction
   set scrolloff=5          " start scrolling if 5 lines left on screen 
   set termencoding=utf-8
   set relativenumber       " Show relative line numbers
+  set mouse=a
+  set colorcolumn=80,100
+  set cot=noselect,menu,menuone
   " }}}
-set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized
+" -------------------------------------------------------------------
+" colorscheme setting {{{
+" -------------------------------------------------------------------
+  " NeoSolarized Dark {{{
+  "set background=dark
+  "colorscheme NeoSolarized
+  "" Enable true color 启用终端24位色
+  "if exists('+termguicolors')
+  "  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  "  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   "  set termguicolors
-"  set background=dark
-"let g:solarized_termcolors=256
-"  colorscheme NeoSolarized
-"  " Enable true color 启用终端24位色
-"  if exists('+termguicolors')
-"    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-"    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-"    set termguicolors
-"  endif
-  " Show special characters 
+  "endif
+  "" Show special characters 
+  "set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+  "highlight NonText guifg=#3c3c3c
+  "set list
+  " }}}
+  " Tender {{{ 
+  "if (has("termguicolors"))
+  "  set termguicolors
+  "endif
+  "syntax enable
+  "colorscheme tender
+  "" Show special characters
+  "set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+  "highlight NonText guifg=#3c3c3c
+  "set list
+  "" }}}
+  " Gruvbox {{{ 
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+  syntax enable
+  colorscheme gruvbox
+  " Show special characters
   set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
-  highlight NonText guifg=#3f3f3f
+  highlight NonText guifg=#3c3c3c
   set list
+"hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+  " }}}
 " }}}
+" -------------------------------------------------------------------
 " vim keyboard setup {{{ 
+" -------------------------------------------------------------------
   let g:mapleader = ' '
   map <C-j> <C-W>j " Switch split downwards 
   map <C-k> <C-W>k " Switch split upwards 
   map <C-h> <C-W>h " Switch split leftwards
   map <C-l> <C-W>l " Switch split rightwards
+" }}}
+" -------------------------------------------------------------------
+" Vim StatusLine {{{
+" -------------------------------------------------------------------
+set statusline=
+set statusline+=\ %f      " Show the filename of the current buffer incl. Path
+set statusline+=%M        " Show ,+ if the file is edited
+set statusline+=%R        " Show ,ro is the file is readonly
+set statusline+=%=        " Jump to the right
+set statusline+=ft:%Y " Show filetype
+set statusline+=\ \|\     " Show seperator
+set statusline+=enc:%{&fileencoding?&fileencoding:&encoding} " Show encoding
+set statusline+=\ \|\     " Show seperator
+set statusline+=ff:%{&fileformat}                          " Show fileformat
+set statusline+=\ \|\     " Show seperator
+set statusline+=pos:%l:%c\ \(%p%%\) " Show position as line, columns, percent of file
+set statusline+=\         " Show a last space 
 " }}}
 " -------------------------------------------------------------------
 " Filetype Setups {{{
@@ -113,10 +172,24 @@ colorscheme solarized
   let g:Lf_WindowPosition = 'popup'
 " }}}
 " Plugin Deoplete {{{ 
-  let g:deoplete#enable_at_startup = 1
-  call deoplete#custom#option('sources', { '_': ['ale'] })
+"   let g:deoplete#enable_at_startup = 1
+"   let g:deoplete#delimiters = ['/','.']
+"   let g:deoplete#sources#go = 'vim-go'
+"   "let g:deoplete#keyword_patterns = {}
+"   "let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
+"   call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+"   call deoplete#custom#option('omni_patterns', { 'complete_method': 'omnifunc', 'terraform': '[^ *\t"{=$]\w*' })
+"   call deoplete#custom#option('sources', { '_': ['ale'] })
+"   let g:deoplete#omni_patterns = {}
+"   " (Optional)Hide Info(Preview) window after completions
+"   autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"   autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+" 
+"   let g:deoplete#enable_at_startup = 1
 " }}}
 " Plugin NerdTree {{{
+  let NERDTreeShowHidden=1
+  " We are closing NERDTree if it's the last open buffer
   if !(has('gui_vimr'))
   	autocmd vimenter * NERDTree
   	autocmd vimenter * wincmd w
@@ -140,11 +213,28 @@ colorscheme solarized
   nmap <leader>8 <Plug>BuffetSwitch(8)
   nmap <leader>9 <Plug>BuffetSwitch(9)
   nmap <leader>0 <Plug>BuffetSwitch(10)
-
-
-
-
-
+" }}}
+" Plugin vim-terraform {{{ 
+  " (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
+  let g:terraform_completion_keys = 1
+  " (Optional) Default: 1, enable(1)/disable(0) terraform module registry completion
+  let g:terraform_registry_module_completion = 0
+" }}}
+" Plugin vim-go {{{
+" -------------------------------------------------------------------
+  let g:go_highlight_structs = 1 
+  let g:go_highlight_methods = 1
+  let g:go_highlight_functions = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_function_parameters = 1
+  let g:go_highlight_function_calls = 1
+  let g:go_highlight_fields = 1
+  let g:go_highlight_variable_declarations = 1
+  let g:go_highlight_extra_types = 1
+  autocmd FileType go nmap <leader>b  <Plug>(go-build)
+  autocmd FileType go nmap <leader>r  <Plug>(go-run)
+  autocmd FileType go set foldmethod=syntax 
 " }}}
 " -------------------------------------------------------------------
 function! ToggleFold() " {{{
@@ -156,8 +246,12 @@ function! ToggleFold() " {{{
   	endif
   endif
   echo
-endfun " }}}
+endfun 
 noremap <c-f> :call ToggleFold()<cr>
-set mouse=a
+" }}}
+" -------------------------------------------------------------------
+" (Optional)Remove Info(Preview) window
+"set completeopt-=preview
 
+"call deoplete#initialize()
 " vim:set foldmarker={{{,}}} foldlevel=0 fdm=marker ts=2 sw=2 sts=2 et :
