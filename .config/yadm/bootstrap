@@ -979,7 +979,7 @@ for app in "Activity Monitor" \
 done
 
 #bootstrap vim 
-sudo pip3 install neovim
+sudo pip3 install neovim pynvim
 vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+UpdateRemotePlugins' '+qall'
 
 open /Applications/Dozer.app 
