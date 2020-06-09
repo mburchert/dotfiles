@@ -1,6 +1,6 @@
 # theme_gruvbox dark medium
 #set fish_greeting (string collect (cat ~/daily.todo))
-set fish_greeting ''
+#set fish_greeting ''
 set -Ux FISH_SECURE_CONFIG .fish.secure.config
 set -Ux TF_PLUGIN_CACHE_DIR $HOME/.terraform.d/plugin-cache
 set -Ux EDITOR vim
