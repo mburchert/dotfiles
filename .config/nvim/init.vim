@@ -75,7 +75,7 @@ if !(has('gui_vimr'))
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 endif
 
-" Section: [plugin] vim-tmux-navigator
+"Section: [plugin] vim-tmux-navigator
 
 Plug 'christoomey/vim-tmux-navigator' " Vim / Tmux Navigation 
   " Also allow switching splits with the same keys as with tmux panes
@@ -103,21 +103,22 @@ map <C-l> <C-W>l " Switch split rightwards
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
   let g:coc_snippet_next = '<tab>'
+  " Highlight the symbol and its references when holding the cursor.
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
 
 " Section: [plugin] vim-gitgutter 
 
   Plug 'airblade/vim-gitgutter'  
 
-" Section: [plugin] vim-todo-lists 
-  " This is currently for testing to do my todo lists in vim instead
-  " of some fancy other apps. 
-
-  Plug 'aserebryakov/vim-todo-lists'
-
 " Section: [syntax] vim-fish
 Plug 'dag/vim-fish'
 autocmd FileType fish setlocal ts=2 sts=2 sw=2 expandtab
 
+" Section: [plugin] todo.txt
+
+Plug 'freitass/todo.txt-vim'
 " Section: [syntax] Dockerfile
 
   " This is used for dockerfile syntax and snippets
@@ -139,7 +140,7 @@ set showmatch            " highlight matching brackets
 set scrolloff=5          " start scrolling if 5 lines left on screen 
 set termencoding=utf-8
 set relativenumber       " Show relative line numbers
-"set mouse=a
+set mouse=a
 set colorcolumn=80,100
 set cot=noselect,menu,menuone
 set modelineexpr
