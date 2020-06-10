@@ -3,6 +3,8 @@ function kubectl --wraps kubectl --description 'Overlay to kubectl'
   set -l opts   (__get_opts   $argv)
 
   switch $action
+  case context
+    command kubectx
   case ctx
     command kubectx
   case ns 
