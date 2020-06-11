@@ -1,0 +1,118 @@
+k9s:
+  refreshRate: 2
+  headless: true
+  readOnly: false
+  noIcons: true
+  logger:
+    tail: 100
+    buffer: 5000
+    sinceSeconds: -1
+    fullScreenLogs: false
+    textWrap: true
+    showTime: true
+  currentContext: eks-cluster-eu-west-1-monitoring
+  currentCluster: arn:aws:eks:eu-west-1:578325145945:cluster/eks-cluster-eu-west-1-monitoring
+  clusters:
+    arn:aws:eks:eu-west-1:241219621310:cluster/eks-cluster-eu-west-1-dev:
+      namespace:
+        active: monitoring
+        favorites:
+        - stable
+        - monitoring
+        - all
+        - default
+      view:
+        active: pod
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    arn:aws:eks:eu-west-1:300045716956:cluster/eks-cluster-eu-west-1-prod:
+      namespace:
+        active: monitoring
+        favorites:
+        - monitoring
+        - prod
+        - all
+        - kube-system
+        - default
+      view:
+        active: nodes monitoring
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    arn:aws:eks:eu-west-1:449327390781:cluster/eks-cluster-eu-west-1-internal:
+      namespace:
+        active: monitoring
+        favorites:
+        - mburchert
+        - kube-system
+        - monitoring
+        - all
+        - default
+      view:
+        active: pod
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    arn:aws:eks:eu-west-1:578325145945:cluster/eks-cluster-eu-west-1-monitoring:
+      namespace:
+        active: monitoring
+        favorites:
+        - kube-system
+        - prod
+        - dev
+        - monitoring
+        - all
+        - default
+      view:
+        active: pods monitoring
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    docker-desktop:
+      namespace:
+        active: default
+        favorites:
+        - default
+      view:
+        active: ctx
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+  thresholds:
+    cpu:
+      critical: 90
+      warn: 70
+    memory:
+      critical: 90
+      warn: 70
