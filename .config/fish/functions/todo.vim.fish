@@ -1,4 +1,4 @@
 function todo.vim
-  command nvim ~/todo/todo.txt
+  command nvim ~/Dropbox/Apps/Todotxt+/todo.txt
 end
 
