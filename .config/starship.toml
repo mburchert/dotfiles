@@ -1,0 +1,22 @@
+# Replace the "❯" symbol in the prompt with "➜"
+[character]      # The name of the module we are configuring is "character"
+#symbol = "%{%G➜%}"     # The "symbol" segment is being set to "➜"
+symbol = "➜"     # The "symbol" segment is being set to "➜"
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+[kubernetes]
+disabled = false
+style = "fg:#458588"
+
+[aws]
+disabled = true
+
+[directory]
+truncate_length = 5
+style = "fg:#d79921"
+
+[terraform] 
+disabled = true
