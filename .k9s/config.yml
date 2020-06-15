@@ -1,28 +1,30 @@
 k9s:
   refreshRate: 2
-  headless: true
+  headless: false
   readOnly: false
-  noIcons: true
+  noIcons: false
   logger:
-    tail: 100
-    buffer: 5000
+    tail: 25
+    buffer: 100
     sinceSeconds: -1
-    fullScreenLogs: false
+    fullScreenLogs: true
     textWrap: true
     showTime: true
-  currentContext: eks-cluster-eu-west-1-monitoring
-  currentCluster: arn:aws:eks:eu-west-1:578325145945:cluster/eks-cluster-eu-west-1-monitoring
+  currentContext: eks-cluster-eu-west-1-internal
+  currentCluster: arn:aws:eks:eu-west-1:449327390781:cluster/eks-cluster-eu-west-1-internal
   clusters:
     arn:aws:eks:eu-west-1:241219621310:cluster/eks-cluster-eu-west-1-dev:
       namespace:
-        active: monitoring
+        active: mburchert
         favorites:
+        - mburchert
+        - qa
         - stable
         - monitoring
         - all
         - default
       view:
-        active: pod
+        active: pods
       featureGates:
         nodeShell: false
       shellPod:
@@ -34,32 +36,12 @@ k9s:
       portForwardAddress: localhost
     arn:aws:eks:eu-west-1:300045716956:cluster/eks-cluster-eu-west-1-prod:
       namespace:
-        active: monitoring
+        active: ""
         favorites:
         - monitoring
         - prod
         - all
         - kube-system
-        - default
-      view:
-        active: nodes monitoring
-      featureGates:
-        nodeShell: false
-      shellPod:
-        image: busybox:1.31
-        namespace: default
-        limits:
-          cpu: 100m
-          memory: 100Mi
-      portForwardAddress: localhost
-    arn:aws:eks:eu-west-1:449327390781:cluster/eks-cluster-eu-west-1-internal:
-      namespace:
-        active: monitoring
-        favorites:
-        - mburchert
-        - kube-system
-        - monitoring
-        - all
         - default
       view:
         active: pod
@@ -72,9 +54,29 @@ k9s:
           cpu: 100m
           memory: 100Mi
       portForwardAddress: localhost
+    arn:aws:eks:eu-west-1:449327390781:cluster/eks-cluster-eu-west-1-internal:
+      namespace:
+        active: all
+        favorites:
+        - officeit
+        - kube-system
+        - monitoring
+        - all
+        - default
+      view:
+        active: secrets
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
     arn:aws:eks:eu-west-1:578325145945:cluster/eks-cluster-eu-west-1-monitoring:
       namespace:
-        active: monitoring
+        active: dev
         favorites:
         - kube-system
         - prod
@@ -83,7 +85,7 @@ k9s:
         - all
         - default
       view:
-        active: pods monitoring
+        active: pod
       featureGates:
         nodeShell: false
       shellPod:
