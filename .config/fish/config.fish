@@ -12,5 +12,12 @@ contains v5j5w5ru7bbppftz64fvc5mo6q $SSH_KEYS;  or set -Ua SSH_KEYS v5j5w5ru7bbp
 contains e2f5oe5oq5fm5bv5oory5yilpe $SSH_KEYS;  or set -Ua SSH_KEYS e2f5oe5oq5fm5bv5oory5yilpe
 
 fish_ssh_agent
-starship init fish | source
+#starship init fish | source
+# Spacefish config
+set SPACEFISH_HOST_SHOW false
+set SPACEFISH_USER_SHOW false
+set SPACEFISH_PACKAGE_SHOW false
+set SPACEFISH_NODE_SHOW false
+set SPACEFISH_JULIA_SHOW	false
+set SPACEFISH_HASKELL_SHOW false
 
