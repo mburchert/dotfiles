@@ -8,8 +8,7 @@ set -Ux EDITOR vim
 contains /Users/mburchert/bin              $fish_user_paths; or set -Ua fish_user_paths /Users/mburchert/bin
 contains /usr/local/opt/terraform@0.11/bin $fish_user_paths; or set -Ua fish_user_paths /usr/local/opt/terraform@0.11/bin
 
-contains v5j5w5ru7bbppftz64fvc5mo6q $SSH_KEYS;  or set -Ua SSH_KEYS v5j5w5ru7bbppftz64fvc5mo6q
-contains e2f5oe5oq5fm5bv5oory5yilpe $SSH_KEYS;  or set -Ua SSH_KEYS e2f5oe5oq5fm5bv5oory5yilpe
+contains 5dz2yv5nkbaojl4zw6xwlf3o5e $SSH_KEYS;  or set -Ua SSH_KEYS 5dz2yv5nkbaojl4zw6xwlf3o5e
 
 fish_ssh_agent
 #starship init fish | source
